@@ -430,7 +430,7 @@ fi
 
 cd $WORKDIR
 if [ ! -d dev-tools ]; then
-  git clone https://github.com/aeolus-incubator/dev-tools.git
+  git clone https://github.com/martinpovolny/dev-tools.git
   if [ "x$DEV_TOOLS_BRANCH" != "x" ]; then
     cd dev-tools
     git checkout $DEV_TOOLS_BRANCH
