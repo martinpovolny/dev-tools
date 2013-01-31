@@ -242,11 +242,12 @@ if [ "$os" = "f16" -o "$os" = "f17" -o "$os" = "el6" ]; then
 
       # if there was no pre-existing pg_hba.conf, set all authentication methods to 'trust' and 'md5'
       if [ $PG_HBA_CONF_EXISTS -eq 0 ]; then
-        sudo cat >/var/lib/pgsql/data/pg_hba.conf <<EOD
+        sudo sh -c "cat >/var/lib/pgsql/data/pg_hba.conf <<EOD
 local all all trust
 host all all 127.0.0.1/32 md5
 host all all ::1/128 md5
 EOD
+"
       fi
 
       # start the postgresql service
