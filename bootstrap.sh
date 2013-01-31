@@ -119,8 +119,8 @@ if `netstat -tln | grep -q -P "\:$FACTER_CONDUCTOR_PORT\\s"`; then
   exit 1
 fi
 
-if [ -e $FACTER_AEOLUS_WORKDIR/conductor ] || [ -e $FACTER_AEOLUS_WORKDIR/tim ] || \
-  [ -e $FACTER_AEOLUS_WORKDIR/aeolus-cli ]; then
+if [ -e $FACTER_AEOLUS_WORKDIR/conductor -o -e $FACTER_AEOLUS_WORKDIR/tim -o \
+  -e $FACTER_AEOLUS_WORKDIR/aeolus-cli ]; then
   echo -n "Already existing directories, one of $FACTER_AEOLUS_WORKDIR/conductor, "
   echo "$FACTER_AEOLUS_WORKDIR/tim or $FACTER_AEOLUS_WORKDIR/aeolus-cli.  Aborting"
   exit 1
@@ -350,8 +350,7 @@ if [ "x$RBENV_VERSION" != "x" ]; then
 
   export FACTER_RBENV_VERSION=$RBENV_VERSION
   # looking up a home dir in puppet is not terribly easy, hence the next two lines
-  eval thehomedir=~
-  export FACTER_RBENV_HOME=`echo $thehomedir`/.rbenv
+  export FACTER_RBENV_HOME=~/.rbenv
 fi
 
 gem_installs="json facter puppet"
@@ -381,7 +380,7 @@ for the_gem in $gem_installs; do
         exit 1
       fi
     fi
-    if  [[ ${gem_versions[$the_gem]} ]]; then
+    if [ ! "x${gem_versions[$the_gem]}" = "x" ]; then
         cmd="$cmd -v ${gem_versions[$the_gem]}"
     fi
     $cmd
